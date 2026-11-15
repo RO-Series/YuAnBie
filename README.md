@@ -4,19 +4,25 @@
 
 ## 最新版本
 
-- 版本：v1.2.0
-- 安装包：`YuAnBie-1.2.0-x64.msi`
-- SHA256：`EA2643A86A77E1B6A3A9242B228FF785233807BF40FA947434646412E2B25959`
-- 下载：[YuAnBie-1.2.0-x64.msi](https://github.com/RO-Series/YuAnBie/releases/download/v1.2.0/YuAnBie-1.2.0-x64.msi)
+- 版本：v1.2.30
+- 安装包：`YuAnBie-1.2.30-x64.msi`
+- SHA256：`733e8e28cab606a58a990a7772e2e6b0ceb1f13f5aa3c7e7f2de9e9b53be57c5`
+- 下载：[YuAnBie-1.2.30-x64.msi](https://github.com/RO-Series/YuAnBie/releases/download/v1.2.30/YuAnBie-1.2.30-x64.msi)
 
 ## 安装
 
 下载 MSI 后双击安装。应用程序通过本仓库 Release 中的 `update.json` 检查更新。
 
+应用数据默认保存在 `%ProgramData%\屿岸别`。
+
+安装或运行问题请在 [RO-Series/YuAnBie](https://github.com/RO-Series/YuAnBie/issues) 提交。
+
 ## 说明
 
-屿岸别 v1.2.0
+屿岸别 v1.2.30
 
-- 使用澄知 OAuth2 Authorization Code + PKCE 登录。
-- 聊天页已移除，官机消息请在调试台事件流或机器人日志中查看。
-- 更新包仅发布到 RO-Series/YuAnBie，主程序源码不会上传到此仓库。
+- 新增 QQ 官机 AppSecret 自动同步与连接自愈。
+- 登录、启动、每 30 分钟及鉴权失败时自动核对官机凭据。
+- Bot 卡片和业务中心显示 AppSecret 同步状态，并支持立即同步。
+- 修复并发初始化时 SQLite v1 到 v2 迁移冲突。
+- 主程序和安装包元数据为 v1.2.30，发布资产不包含主程序源码。
