@@ -4,10 +4,10 @@
 
 ## 最新版本
 
-- 版本：v1.2.30
-- 安装包：`YuAnBie-1.2.30-x64.msi`
-- SHA256：`733e8e28cab606a58a990a7772e2e6b0ceb1f13f5aa3c7e7f2de9e9b53be57c5`
-- 下载：[YuAnBie-1.2.30-x64.msi](https://github.com/RO-Series/YuAnBie/releases/download/v1.2.30/YuAnBie-1.2.30-x64.msi)
+- 版本：v1.2.32
+- 安装包：`YuAnBie-1.2.32-x64.msi`
+- SHA256：`9778ab6df48a4392578f5ad5467079594d25c754ae9ca9b490d541299e085114`
+- 下载：[YuAnBie-1.2.32-x64.msi](https://github.com/RO-Series/YuAnBie/releases/download/v1.2.32/YuAnBie-1.2.32-x64.msi)
 
 ## 安装
 
@@ -19,10 +19,10 @@
 
 ## 说明
 
-屿岸别 v1.2.30
+屿岸别 v1.2.32
 
-- 新增 QQ 官机 AppSecret 自动同步与连接自愈。
-- 登录、启动、每 30 分钟及鉴权失败时自动核对官机凭据。
-- Bot 卡片和业务中心显示 AppSecret 同步状态，并支持立即同步。
-- 修复并发初始化时 SQLite v1 到 v2 迁移冲突。
-- 主程序和安装包元数据为 v1.2.30，发布资产不包含主程序源码。
+- 修复未安装 NapCat 时无法保存 QQ 官机配置的问题。
+- QQ 官机保存、启动与状态提示不再探测本机 NapCat、QQ 或 SnowLuma 运行时。
+- 官机即使残留 Docker 字段，也不会被 NapCat 镜像门禁错误阻断。
+- 保留 NapCat/SnowLuma 旧协议配置原有的组件门禁行为。
+- 新增官机运行时节门禁回归测试。
