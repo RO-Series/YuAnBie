@@ -1,138 +1,102 @@
-<div align="center">
+<p align="center">
+  <img src="assets/logo.png" alt="YuAnBie Logo" width="120" height="120" />
+</p>
 
-<img src="src-ui/assets/logo.png" alt="屿岸别 Logo" width="104" />
+<h1 align="center">屿岸别 (YuAnBie)</h1>
 
-# 屿岸别
+<p align="center">一款基于 Tauri 2 与 Rust 打造的纯血 QQ 官方机器人桌面控制台</p>
 
-**QQ 官方机器人控制台**
+<p align="center">
+  <a href="https://github.com/RO-Series/YuAnBie/releases/latest"><img src="https://img.shields.io/badge/Download-v1.2.34-blue?style=flat-square" alt="Download" /></a>
+  <img src="https://img.shields.io/badge/Platform-Windows-0078D6?style=flat-square" alt="Platform" />
+  <img src="https://img.shields.io/badge/License-GPL--3.0-green?style=flat-square" alt="License" />
+  <img src="https://img.shields.io/badge/Tauri-2-24C8DB?style=flat-square" alt="Tauri 2" />
+  <img src="https://img.shields.io/badge/Rust-2024-orange?style=flat-square" alt="Rust" />
+</p>
 
-在一个桌面终端里管理官机、查看 CPU 与内存、检查实时事件和运行日志。
+---
 
-`v1.2.33` · Rust + Tauri 2 + React
+## ✨ 核心特性
 
-[下载最新版](https://github.com/RO-Series/YuAnBie/releases/latest) · [全部发行版](https://github.com/RO-Series/YuAnBie/releases)
+- ⚡ **纯血官机**：原生对接 QQ 开放平台 API v2（WebSocket 网关 + HTTP OpenAPI），无需安装 NapCat、无需填写 QQID，AppID + AppSecret 即可上线。
+- 🧠 **极强扩展**：内置 SQLite 持久化与自研 AST 模板引擎，模板支持嵌套标签、参数替换、条件分支与整套异步业务流（`[cmd.…]` → 任务队列 → Outbox 重试）。
+- 🎁 **开箱即用**：随包预置 **13 条内置指令**——`菜单`、`查书`、`选择`、`番茄`、`点歌`、`选歌`、`签到`、`积分`、`积分记录`、`积分重试`、`授权查询`、`授权本群`、`取消授权`。
+- 🤖 **智能 Agent**：群级人格与唤醒词、上下文记忆（按群共享、可裁剪）、官方/自定义模型双模式，模型可调用 `findbook.search`、`findbook.download`、`fanqie.parse`、`book.variable.get` 等工具。
+- 💻 **桌面级体验**：极客终端风 UI、内置多标签终端（自定义 shell / 工作目录 / 启动参数 / 环境变量）、全局代理、系统托盘、主题与缩放记忆。
+- 🛡 **可控可观测**：任务、Outbox、变量、日志、通知全链路可查；AI 失败落库并在 Bot 卡片亮红点；日志页支持按级别/来源筛选、清屏与脱敏导出。
+- 🔐 **凭据安全**：AppSecret / Token / 代理密码统一进系统凭据库（SecretStore），导出配置自动剔除敏感字段。
 
-</div>
+<!-- 截图: 概览页 -->
 
-## 当前版本
+## 🚀 快速开始
 
-`v1.2.33` 是现行 Windows 正式版本，主要修复业务中心四个 Tab 内容无法滚动、底部内容被裁切的问题：
+1. 前往 [Releases](https://github.com/RO-Series/YuAnBie/releases/latest) 下载 `.msi` 安装包或免安装版 `.exe`。
+2. 打开应用，在 **个人** 页点击「登录澄知账号」，浏览器完成 OAuth2 授权（PKCE，无 client_secret）。
+3. 登录后自动拉取官机列表与密钥，回到 **机器人** 页一键连接；状态依次经过 `connecting → identifying → ready`。
 
-- 「指令与词库」在宽屏下使用左侧列表与右侧编辑器独立滚动；小窗口统一由页面内容区滚动。
-- 「变量」「AI 配置」「任务与发送」共用页面滚动区域，切换 Tab 时自动回到顶部。
-- 变量表格和任务表格保留横向滚动，并为底部内容留出空间，避免被滚动条遮挡。
+> 系统要求：Windows 10/11 + WebView2 Runtime（系统通常自带）。数据默认落在 `%ProgramData%\屿岸别`。
 
-已知限制：在 `1279px ↔ 1280px` 响应式断点之间切换时，业务中心滚动位置可能重置。
+<!-- 截图: 机器人页 -->
 
-## 产品范围
+## 🧩 指令与模板示例
 
-屿岸别面向在程序内部处理指令消息的 QQ 官方机器人。桌面端只负责控制、监控和排障，QQ 客户端的聊天体验仍由 QQ 提供。
-
-主窗口提供五个主功能入口，并在侧栏底部保留独立的设置入口：
-
-- **概览**：官机舰队状态、最近事件、主机 CPU / RAM。
-- **机器人**：创建、配置、连接和停止官机 Bot。
-- **调试台**：查看 API 路由、请求结果、实时事件和 `message_create` 消息内容。
-- **业务中心**：查看群授权、积分业务任务和持久化记录，切换查书、番茄、点歌、词库与 AI 业务。
-- **个人**：澄知账号登录、授权状态、贡献与积分资料。
-- **设置**：数据目录、日志、界面偏好、授权重试与版本信息。
-
-聊天页、聊天弹窗、账号托盘、原生截图和群文件体系已在阶段 5a 从产品与代码中移除。查看官机消息请使用**调试台事件流**；运维日志请使用机器人日志页。
-
-业务中心的 AI 支持两种模式。官方模型按 OpenAI 兼容响应的实际 `total_tokens` 扣除站内积分；自定义模型接入用户自己的 OpenAI 兼容服务，不扣站内积分。所有 API Key 只保存到系统 SecretStore，不进入前端配置或普通日志。
-
-## 下载与安装
-
-推荐从 [GitHub Releases](https://github.com/RO-Series/YuAnBie/releases/latest) 下载 Windows 安装包：
-
-1. 下载 `YuAnBie-1.2.33-x64.msi`。
-2. 双击安装并允许 Windows UAC 提示；MSI 使用 `perMachine` 安装，因此需要管理员权限。
-3. 安装完成后从桌面或开始菜单启动**屿岸别**。
-4. 在「个人」页面登录澄知账号；授权成功后才能连接 QQ 官机。
-
-免安装版 `YuAnBie-1.2.33-x64.exe` 也已随 Release 发布。程序需要 Windows 10 / 11 x64 和 Microsoft Edge WebView2；Windows 10/11 通常已自带 WebView2。
-
-应用通过以下清单检查更新：
+「查书」指令的完整模板只有两行，却同时完成了即时回复与异步任务派发：
 
 ```text
-https://github.com/RO-Series/YuAnBie/releases/latest/download/update.json
+[send.markdown.**正在查书：**[arg]
+[cmd.查书.搜索.[arg]]]
 ```
 
-## 授权与受限模式
+- `[send.…]` 是唯一的外发出口，所有可见输出必须写在里面；
+- `[arg]` 取触发词之后的全部参数，查询词里的点号（如 `云烟.v2`）会原样保留；
+- `[cmd.查书.搜索.[arg]]` 不直接回复，而是落一条任务，由后台 worker 执行搜索、写 `book.list` 变量，再由 `查书.下载` 发文件。
 
-应用使用澄知文档站的 OAuth2 Authorization Code + PKCE 登录：
+支持的输出段：`text` / `markdown` / `image` / `record` / `video` / `file` / `json` / `button`，配合 `[newline]`、`[or]`、`[random]`、`[judge]`、`[userid]`、`[username]`、`[groupid]`、`[time.format]`、`[book.list]`、`[book.result.path]` 等标签组合。
 
-- 桌面端是 Public Client，不包含 `client_secret`；授权码与 PKCE 会话绑定。
-- 本地回调地址固定为 `http://127.0.0.1:14201/callback`。
-- 授权范围是 `profile activity points offline_access`。
-- Access Token、Refresh Token 与到期时间以单个原子 JSON 会话写入系统 `SecretStore`。
-- Refresh 成功后，新的 Refresh Token 会与 Access Token 一起原子替换。
+<!-- 截图: 业务中心 · 指令与词库 -->
 
-未登录或授权失效时，主界面可查看，但 Bot 连接进入受限模式。顶部红条会提示“未登录澄知账号，Bot 连接受限”，点击进入**个人**页面登录或重试授权。
+## 🏗 技术栈
 
-构建时可通过 `CLEARZHI_OAUTH_CLIENT_ID` 注入 Client ID；运行环境中的同名变量也可覆盖构建值。澄知后台必须登记上述本地回调地址。
+| 层 | 选型 |
+|---|---|
+| 桌面壳 | Tauri 2（WebView2、单实例、系统托盘、自动更新） |
+| 核心 | Rust 2024（`ncd-domain` / `ncd-qqofficial` / `ncd-business` / `ncd-runtime`） |
+| 前端 | React 19 + TypeScript + Vite + Tailwind CSS |
+| 数据 | SQLite（WAL，schema 迁移至 v4）+ 系统凭据库 |
+| 协议 | QQ 开放平台 API v2（网关 WS + OpenAPI HTTP） |
 
-## 数据与日志
+## 📦 目录速览
 
-Windows 默认数据根为 `%ProgramData%\屿岸别`，Linux 默认使用 XDG 数据目录下的 `屿岸别`。旧默认目录会在启动时迁移或补齐到新目录；用户主动迁移过的自定义路径保持优先。
-
-官机日志可按 Bot 查看，文件采用 JSON Lines，并按天轮转。物理删除 Bot 后，历史日志在 7 天保留期内仍可查询。
-
-## 运行环境
-
-- Windows 10 / 11 x64 或 Windows Server 2016+
-- Microsoft Edge WebView2
-- 登录后由澄知 OAuth 自动拉取官机密钥；未登录或缺少 `qqbot:keys` 权限时进入受限模式，仍可查看 UI、日志与测试数据
-- 从源码构建需要 Rust stable、Node.js 与 pnpm
-
-## 开发与验证
-
-```powershell
-pnpm.cmd install --frozen-lockfile
-pnpm.cmd ts-bindings
-pnpm.cmd typecheck
-pnpm.cmd lint
-pnpm.cmd build
-cargo check --workspace --all-targets
-cargo test --workspace
+```text
+crates/
+  ncd-domain/       跨边界数据模型（消息、协议、配置、终端）
+  ncd-qqofficial/   官方协议实现（网关、鉴权、事件归一化、脱敏）
+  ncd-business/     业务引擎（AST、指令/词库、任务、Outbox、查书/番茄/点歌、AI Agent）
+  ncd-runtime/      运行时（Bot 生命周期、终端、网络、迁移）
+src-tauri/          Tauri 命令层与窗口/托盘/更新
+src-ui/             React 控制台界面
 ```
 
-只构建 Tauri 主程序：
+## 🗺 路线图
 
-```powershell
-pnpm.cmd tauri build --no-bundle
-```
+- [x] 官方协议直连与多 Bot 并发
+- [x] SQLite 业务引擎与 AST 模板
+- [x] AI Agent（记忆、工具调用、失败可观测）
+- [x] 内置指令与授权体系
+- [ ] 更细粒度的权限模型
+- [ ] Linux / macOS 打包
 
-Tauri 的直接输出为 `target/release/NapCatQQ-Desktop.exe`。对外交付时复制为：
+## 📄 开源协议
 
-```powershell
-Copy-Item target/release/NapCatQQ-Desktop.exe target/release/屿岸别.exe -Force
-```
+本项目以 **GNU General Public License v3.0** 发布，详见 [LICENSE](https://github.com/RO-Series/YuAnBie/blob/main/LICENSE)。
 
-不要用单独执行的 `cargo build --release` 覆盖 Tauri 产物，否则可能把开发服务器地址写进前端资源。
+## 🙏 致谢
 
-构建 MSI 并准备发布资产：
+- [Tauri](https://tauri.app/) · [Rust](https://www.rust-lang.org/) · [React](https://react.dev/) · [Vite](https://vitejs.dev/) · [SQLite](https://sqlite.org/)
+- 图标、协议与业务实现均来自本项目自身资产，未使用第三方品牌素材。
 
-```powershell
-pnpm.cmd tauri:build:msi
-pnpm.cmd release:prepare-yuanbie
-```
+---
 
-发布到 `RO-Series/YuAnBie`：
-
-```powershell
-$env:GITHUB_TOKEN = '<具备 RO-Series/YuAnBie contents:write 权限的令牌>'
-pnpm.cmd release:publish-yuanbie
-Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue
-```
-
-Release 只上传四个资产：
-
-- `YuAnBie-<version>-x64.msi`
-- `YuAnBie-<version>-x64.exe`
-- `update.json`
-- `SHA256SUMS.txt`
-
-`README.md` 只作为 Release Notes，不作为额外资产上传。GitHub Actions 使用仓库秘密 `YUANBIE_RELEASE_TOKEN`，并会清理 Release 中不在白名单内的旧资产。
-
-架构与阶段记录位于 [`docs/architecture/`](docs/architecture/)。阶段 5a 的删除范围、保留边界和遗留任务见 [`stage5a-cleanup.md`](docs/architecture/stage5a-cleanup.md)。
+<p align="center">
+  <sub>本仓库仅发布安装包与更新元数据，主程序源码不在本仓库。</sub>
+</p>
