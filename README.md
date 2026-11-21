@@ -7,7 +7,7 @@
 <p align="center">一款基于 Tauri 2 与 Rust 打造的纯血 QQ 官方机器人桌面控制台</p>
 
 <p align="center">
-  <a href="https://github.com/RO-Series/YuAnBie/releases/latest"><img src="https://img.shields.io/badge/Download-v1.2.34-blue?style=flat-square" alt="Download" /></a>
+  <a href="https://github.com/RO-Series/YuAnBie/releases/latest"><img src="https://img.shields.io/badge/Download-v1.2.35-blue?style=flat-square" alt="Download" /></a>
   <img src="https://img.shields.io/badge/Platform-Windows-0078D6?style=flat-square" alt="Platform" />
   <img src="https://img.shields.io/badge/License-GPL--3.0-green?style=flat-square" alt="License" />
   <img src="https://img.shields.io/badge/Tauri-2-24C8DB?style=flat-square" alt="Tauri 2" />
